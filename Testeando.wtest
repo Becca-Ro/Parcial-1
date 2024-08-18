@@ -1,0 +1,45 @@
+import ReHecho.*
+
+describe "Hogwarts" {
+
+    const inmobilus = new HechizoComun (dificultad = 5)
+    const ridikulus = new HechizoComun (dificultad = 25)
+    const severus = new Profesor(hechizoQueEnsenia= inmobilus, casa=slytherin, habilidad= 100, sangrePura = false, salud = 100)
+    const lupin = new Profesor(hechizoQueEnsenia= ridikulus, casa=gryffindor, habilidad= 95, sangrePura = false, salud = 50)
+    const ddaaoo = new Materia(profesor = severus)
+    const harry = new Estudiante(casa= gryffindor, salud= 100, habilidad=25, sangrePura= false)
+    const hermione = new Estudiante(casa= gryffindor, salud= 100, habilidad=25, sangrePura= false)
+    const draco = new Estudiante(casa= slytherin, salud= 100, habilidad=20, sangrePura= true)
+    const ron = new Estudiante(casa= gryffindor, salud= 100, habilidad=25, sangrePura= true)
+    const lechuza = new Criatura ( salud= 100)
+
+  test "DDAAOO" {
+    harry.anotarse(ddaaoo)
+    draco.anotarse(ddaaoo)
+    hermione.anotarse(ddaaoo)
+    ddaaoo.dictarMateria()
+    harry.lanzarHechizo(inmobilus, lechuza)
+    assert.equals(95, lechuza.salud())
+  }
+
+  test "inmobilus"{
+    ron.lanzarHechizo(inmobilus, lechuza)
+
+    assert.fail("Ron no tiene habilidad suficiente o no sabe el hechizo")
+  }
+
+    test "inmobilus II"{
+    draco.lanzarHechizo(inmobilus, lechuza)
+
+    assert.fail("Ron no tiene habilidad suficiente o no sabe el hechizo")
+  }
+
+    test "cambio de profe"{
+        ddaaoo.profesor(lupin)
+        draco.darseDeBaja(ddaaoo)
+        ron.anotarse(ddaaoo)
+        ddaaoo.dictarMateria()
+
+        assert.that(ron.hechizosAprendidos().contains(ridikulus))
+    }
+}
